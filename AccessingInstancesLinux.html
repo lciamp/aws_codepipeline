@@ -1,0 +1,432 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Connecting to Your Linux Instance Using SSH - Amazon Elastic Compute Cloud</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="home" href="#top" />
+      <link rel="up" href="AccessingInstances.html" title="Connect to Your Linux Instance" />
+      <link rel="prev" href="connection-prereqs.html" title="General Prerequisites for Connecting to Your&#xA;&#x9;&#x9;&#x9;&#x9;Instance" />
+      <link rel="next" href="Connect-using-EC2-Instance-Connect.html" title="Connecting to Your Linux Instance&#xA;&#x9;&#x9;&#x9;&#x9;Using EC2 Instance Connect" />
+      <meta name="description" content="Connect to your Linux instances using an SSH client." />
+      <meta name="keywords" content="EC2,Amazon EC2,EC2 instance,instance,VM,virtual machine" />
+      <meta name="deployment_region" content="IAD" />
+      <meta name="product" content="Amazon Elastic Compute Cloud" />
+      <meta name="guide" content="User Guide for Linux Instances" />
+      <meta name="guide-locale" content="en_us" />
+      <meta name="tocs" content="toc-contents.json" />
+      <meta name="marketingLocale" content="en_US" />
+      <link rel="icon" type="image/ico" href="/images/favicon.ico" />
+      <link rel="shortcut icon" type="image/ico" href="/images/favicon.ico" />
+      <link rel="canonical" href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html" />
+      <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css" />
+      <link rel="stylesheet" type="text/css" href="/font/css/font-awesome.min.css" />
+      <link rel="stylesheet" type="text/css" href="/css/google-font.css" />
+      <link id="code-style" rel="stylesheet" type="text/css" href="/css/code/light.css" />
+      <link rel="stylesheet" type="text/css" href="/css/jquery-ui.theme.css" />
+      <link rel="stylesheet" type="text/css" href="/css/colorbox.css" />
+      <link rel="stylesheet" type="text/css" href="/css/awsdocs.css?v=20181221" /><script type="text/javascript" src="/js/highlight.pack.js"></script><script type="text/javascript" src="/js/jquery.min.js"></script><script type="text/javascript" src="/js/jquery-ui.min.js"></script><script type="text/javascript" src="/js/jquery.colorbox.js"></script><script type="text/javascript" src="/js/awsdocs.min.js?v=20181221"></script><link rel="stylesheet" type="text/css" href="/assets/marketing/css/marketing-target.css" /><script type="text/javascript" src="/assets/marketing/js/marketing-target.js"></script></head>
+   <body id="top">
+      <div xmlns:db="http://docbook.org/ns/docbook" id="aws-nav" class="aws-nav-header">
+         <div class="aws-nav-header-left">
+            <div class="aws-nav-logo">
+               <!--aws_logo_105x39.png--><a href="http://aws.amazon.com"><img src="/images/aws_logo_105x39.png" alt="Amazon Web Services" /></a></div>
+         </div>
+         <div id="aws-nav-header-right" class="aws-nav-header-right">
+            <div class="aws-nav-cta-button-outer">
+               <div class="js-mbox" data-mbox="en_h_nav_cta"><span class="aws-nav-cta-default" id="span-conosole-signin"><a id="aws-nav-cta-button" class="aws-nav-button" href="https://console.aws.amazon.com/console/home">Sign In to the Console</a></span><span class="aws-nav-cta-default" id="span-conosole-signup" style="display:none"><a id="aws-nav-cta-button" class="aws-nav-button" href="https://portal.aws.amazon.com/gp/aws/developer/registration/index.html">Try AWS for Free</a></span></div>
+            </div>
+            <div class="aws-nav-popover-trigger" data-dropdown="aws-nav-dropdown-lang"><select id="languageSelection" onchange="SelectLanguage()">
+                  <option value="/de_de/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">Deutsch</option>
+                  <option value="/en_us/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html" selected="selected">English</option>
+                  <option value="/es_es/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">Español</option>
+                  <option value="/fr_fr/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">Français</option>
+                  <option value="/it_it/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">Italiano</option>
+                  <option value="/ja_jp/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">日本語</option>
+                  <option value="/ko_kr/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">한국어</option>
+                  <option value="/pt_br/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">Português</option>
+                  <option value="/zh_cn/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">中文 (简体)</option>
+                  <option value="/zh_tw/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">中文 (繁體)</option></select></div><a class="btn btn-rss-link" id="rss-link-top" target="_blank" href="amazon-ec2-release-notes.rss" title="View RSS Feed"></a><a class="btn btn-kindle-link" id="kindle-link-top" target="_blank" href="http://www.amazon.com/dp/B076452RSZ" title="Open Kindle"></a><a class="btn btn-pdf-link" id="pdf-link-top" href="ec2-ug.pdf#AccessingInstancesLinux" target="_blank" title="Open PDF"></a><a class="btn btn-github-link" id="github-link-top" href="https://github.com/awsdocs/amazon-ec2-user-guide/tree/master/doc_source/AccessingInstancesLinux.md" target="_blank" title="Edit on GitHub"></a><div id="aws-nav-quicklinks-separator" class="aws-nav-quicklinks-separator">
+               <div class="aws-nav-left"></div>
+               <div class="aws-nav-right"></div>
+            </div>
+         </div>
+      </div>
+      <div id="content-container">
+         <div id="left-column">
+            <div id="left-col-header">
+               <div id="left-col-top-content">
+                  <div id="service-name">Amazon Elastic Compute Cloud </div>
+                  <div id="search"><i id="search-icon" class="fa fa-search fa-2x"></i></div>
+                  <div id="guide-info">User Guide for Linux Instances
+                     <div id="content-button"><i id="toggle-contents" class="fa fa-bars"></i></div>
+                  </div>
+               </div>
+               <form id="finegrainedSearch" method="get" onsubmit="return searchFormSubmit(this);" action="/search/doc-search.html">
+                  <div id="search-form"><select id="search-select" name="searchPath">
+                        <option value="all">Entire Site</option>
+                        <option value="AWSMarketplace">AMIs from AWS Marketplace</option>
+                        <option value="amis">AMIs from All Sources</option>
+                        <option value="articles">Articles &amp; Tutorials</option>
+                        <option value="products_and_info">AWS Product Information</option>
+                        <option value="case_studies">Case Studies</option>
+                        <option value="customerapps">Customer Apps</option>
+                        <option value="documentation">Documentation</option>
+                        <option value="documentation-product">Documentation - This Product</option>
+                        <option value="documentation-guide" selected="selected">Documentation - This Guide</option>
+                        <option value="datasets">Public Data Sets</option>
+                        <option value="releasenotes">Release Notes</option>
+                        <option value="solution_providers">Partners</option>
+                        <option value="code">Sample Code &amp; Libraries</option></select><br /><input id="search-query" name="searchQuery" type="text" placeholder="Search" /><input id="search-button" src="/images/search-button.png" alt="Go" type="image" /></div><input type="hidden" name="this_doc_product" id="this_doc_product" value="Amazon Elastic Compute Cloud" /><input type="hidden" name="this_doc_guide" id="this_doc_guide" value="User Guide for Linux Instances" /><input type="hidden" name="doc_locale" value="en_us" /></form>
+            </div>
+            <div id="toc"></div>
+         </div>
+         <div id="main-column">
+            <div id="main">
+               <div id="main-content">
+                  <div id="main-col-body">
+                     <table summary="Breadcrumbs">
+                        <tr>
+                           <td>
+                              <div class="breadcrumb"><a href="/index.html">AWS Documentation</a> » <a href="/ec2/index.html">Amazon EC2</a> » <a href="index.html">User Guide for Linux Instances</a> » <a href="Instances.html">Amazon EC2 Instances</a> » <a href="ec2-instance-lifecycle.html">Instance Lifecycle</a> » <a href="AccessingInstances.html">Connect to Your Linux Instance</a> » <span class="breadcrumb">Connecting to Your Linux Instance Using SSH</span></div>
+                           </td>
+                        </tr>
+                     </table>
+                     <div id="language-notice">
+                        <div class="language-notice-text"></div>
+                     </div>
+                     <div></div>
+                     <h1 class="topictitle" id="AccessingInstancesLinux">Connecting to Your Linux Instance Using SSH</h1>
+                     <p>The following instructions explain how to connect to your instance using an SSH client.
+                        If
+                        			you receive an error while attempting to connect to your instance, see <a href="TroubleshootingInstancesConnecting.html">Troubleshooting Connecting to Your Instance</a>.
+                     </p>
+                     <p>After you launch your instance, you can connect to it and use it the way that you'd
+                        
+                        			use a computer sitting in front of you.
+                     </p>
+                     <div class="aws-note">
+                        <p class="aws-note">Note</p>
+                        <p>After you launch an instance, it can take a few minutes for the instance to be ready
+                           so that you can connect to it. 
+                           		    Check that your instance has passed its status checks. You can view this information
+                           in the <b>Status Checks</b> 
+                           		    column on the <b>Instances</b> page.
+                        </p>
+                     </div>
+                     			
+                     <h2 id="ssh-prereqs">Prerequisites</h2>
+                     			
+                     <p>Before you connect to your Linux instance, complete the following
+                        				prerequisites:
+                     </p>
+                     			
+                     <div class="itemizedlist">
+                        				
+                        				
+                        			
+                        <ul class="itemizedlist" type="disc">
+                           <li class="listitem">
+                              					
+                              <p><span class="topcom">Verify the general prerequisites for connecting to
+                                    							your instance.</span></p>
+                              					
+                              <p>For more information, see <a href="connection-prereqs.html">General Prerequisites for Connecting to Your
+                                    				Instance</a>.
+                              </p>
+                              				
+                           </li>
+                           <li class="listitem">
+                              					
+                              <p><span class="topcom">Install an SSH client on your local
+                                    							computer.</span></p>
+                              					
+                              <p>Your local computer most likely has an SSH client installed by default. You can check
+                                 for
+                                 						an SSH client by typing <b>ssh</b> at the command line. If your
+                                 						local computer doesn't recognize the command, you can install an SSH client.
+                                 						For information about installing an SSH client on Linux or macOS X, see
+                                 							<a href="http://www.openssh.com/" target="_blank">http://www.openssh.com</a>. For
+                                 						information about installing an SSH client on Windows 10, see <a href="https://docs.microsoft.com/en-us/windows-server/administration/openssh/openssh_overview" target="_blank">OpenSSH in Windows</a>.
+                              </p>
+                              				
+                           </li>
+                        </ul>
+                     </div>
+                     		
+                     			
+                     <h2 id="AccessingInstancesLinuxSSHClient">Connect to Your Linux Instance using an SSH
+                        					Client
+                     </h2>
+                     			
+                     			
+                     <p>Use the following procedure to connect to your Linux instance using an SSH client.
+                        				If you receive an error while attempting to connect to your instance, see <a href="TroubleshootingInstancesConnecting.html">Troubleshooting Connecting to Your Instance</a>.
+                     </p>
+                     			
+                     <p class="title"><b>To connect to your instance using SSH</b></p>
+                     <ol>
+                        <li>
+                           					
+                           <p>In a terminal window, use the <b>ssh</b> command to connect to the instance.
+                              						You specify the private key (<code>.pem</code>) file, the user name
+                              						for your AMI, and the public DNS name for your instance. For example, if you
+                              						used Amazon Linux 2 or the Amazon Linux AMI, the user name is <code class="code">ec2-user</code>. For more
+                              						information about finding the user name for an AMI and the DNS name for an
+                              						instance, see <a href="connection-prereqs.html#connection-prereqs-get-info-about-instance">Get Information About Your Instance</a>.
+                           </p>
+                           					<pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight">ssh -i <em class="replaceable"><code>/path/my-key-pair</code></em>.pem <em class="replaceable"><code>ec2-user</code></em>@<em class="replaceable"><code>ec2-198-51-100-1.compute-1.amazonaws.com</code></em></code></pre>
+                           					<p>You see a response like the following:</p>
+                           					<pre class="screen">The authenticity of host 'ec2-198-51-100-1.compute-1.amazonaws.com (10.254.142.33)'
+can't be established.
+RSA key fingerprint is 1f:51:ae:28:bf:89:e9:d8:1f:25:5d:37:2d:7d:b8:ca:9f:f5:f1:6f.
+Are you sure you want to continue connecting (yes/no)?</pre>
+                           				</li>
+                        <li>
+                           					
+                           <p>(IPv6 only) Alternatively, you can connect to the instance using its IPv6 address.
+                              						Specify the <b>ssh</b> command with the path to the private key
+                              						(.pem) file, the appropriate user name, and the IPv6 address. For example,
+                              						if you used Amazon Linux 2 or the Amazon Linux AMI, the user name is
+                              						<code class="code">ec2-user</code>.
+                           </p>
+                           					<pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight">ssh -i <em class="replaceable"><code>/path/my-key-pair</code></em>.pem <em class="replaceable"><code>ec2-user</code></em>@<em class="replaceable"><code>2001:db8:1234:1a00:9691:9503:25ad:1761</code></em></code></pre>
+                           				</li>
+                        <li>
+                           					
+                           <p>(Optional) Verify that the fingerprint in the security alert matches the fingerprint
+                              that
+                              						you previously obtained in <a href="connection-prereqs.html#connection-prereqs-fingerprint">(Optional) Get the Instance Fingerprint</a>. If these fingerprints
+                              						don't match, someone might be attempting a "man-in-the-middle" attack. If
+                              						they match, continue to the next step.
+                           </p>
+                           				
+                        </li>
+                        <li>
+                           					
+                           <p>Enter <code class="code">yes</code>. You see a response like the following:
+                           </p>
+                           					<pre class="screen">Warning: Permanently added 'ec2-198-51-100-1.compute-1.amazonaws.com' (RSA) 
+to the list of known hosts.</pre>
+                           				</li>
+                     </ol>
+                     		
+                     			
+                     <h2 id="AccessingInstancesLinuxSCP">Transferring Files to Linux Instances from Linux Using
+                        					SCP
+                     </h2>
+                     			
+                     			
+                     <p>One way to transfer files between your local computer and a Linux instance is to use
+                        the
+                        				secure copy protocol (SCP). This section describes how to transfer files with
+                        SCP.
+                        				The procedure is similar to the procedure for connecting to an instance with SSH.
+                        
+                     </p>
+                     			
+                     <div class="itemizedlist">
+                        				
+                        <p class="title"><b>Prerequisites</b></p>
+                        				
+                        				
+                        			
+                        <ul class="itemizedlist" type="disc">
+                           <li class="listitem">
+                              					
+                              <p><span class="topcom">Verify the general prerequisites for transferring files to your
+                                    							instance.</span></p>
+                              					
+                              <p>The general prerequisites for transferring files to an instance are the same as the
+                                 						general prerequisites for connecting to an instance. For more information,
+                                 						see <a href="connection-prereqs.html">General Prerequisites for Connecting to Your
+                                    				Instance</a>.
+                              </p>
+                              				
+                           </li>
+                           <li class="listitem">
+                              					
+                              <p><span class="topcom">Install an SCP client</span></p>
+                              					
+                              <p>Most Linux, Unix, and Apple computers include an SCP client by default. If yours
+                                 						doesn't, the OpenSSH project provides a free implementation of the full
+                                 						suite of SSH tools, including an SCP client. For more information, see
+                                 							<a href="http://www.openssh.org/" target="_blank">http://www.openssh.org</a>.
+                              </p>
+                              				
+                           </li>
+                        </ul>
+                     </div>
+                     			
+                     <p>The following procedure steps you through using SCP to transfer a file. If you've
+                        				already connected to the instance with SSH and have verified its fingerprints,
+                        you
+                        				can start with the step that contains the SCP command (step 4).
+                     </p>
+                     			
+                     <p class="title"><b>To use SCP to transfer a file</b></p>
+                     <ol>
+                        <li>
+                           					
+                           <p>Transfer a file to your instance using the instance's public DNS name. For example,
+                              if
+                              						the name of the private key file is
+                              							<code>my-key-pair</code>, the file to transfer is
+                              							<code>SampleFile.txt</code>, the user name is
+                              							<code class="code">ec2-user</code>, and the public DNS name of the instance is
+                              							<code class="code">ec2-198-51-100-1.compute-1.amazonaws.com</code>, use the following
+                              						command to copy the file to the <code class="code">ec2-user</code> home directory.
+                           </p>
+                           					<pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight">scp -i <em class="replaceable"><code>/path/my-key-pair</code></em>.pem <em class="replaceable"><code>/path/SampleFile.txt</code></em> <em class="replaceable"><code>ec2-user</code></em>@<em class="replaceable"><code>ec2-198-51-100-1.compute-1.amazonaws.com</code></em>:<em class="replaceable"><code>~</code></em></code></pre>
+                           					<p>You see a response like the following:</p>
+                           					<pre class="screen">The authenticity of host 'ec2-198-51-100-1.compute-1.amazonaws.com (10.254.142.33)'
+can't be established.
+RSA key fingerprint is 1f:51:ae:28:bf:89:e9:d8:1f:25:5d:37:2d:7d:b8:ca:9f:f5:f1:6f.
+Are you sure you want to continue connecting (yes/no)?</pre>
+                           				</li>
+                        <li>
+                           					
+                           <p>(IPv6 only) Alternatively, you can transfer a file using the IPv6 address
+                              						for the instance. The IPv6 address must be enclosed in square brackets ([]),
+                              						which must be escaped (\).
+                           </p>
+                           					<pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight">scp -i <em class="replaceable"><code>/path/my-key-pair</code></em>.pem <em class="replaceable"><code>/path/SampleFile.txt</code></em> <em class="replaceable"><code>ec2-user</code></em>@\[<em class="replaceable"><code>2001:db8:1234:1a00:9691:9503:25ad:1761</code></em>\]:<em class="replaceable"><code>~</code></em></code></pre>
+                           				</li>
+                        <li>
+                           					
+                           <p>(Optional) Verify that the fingerprint in the security alert matches the fingerprint
+                              that
+                              						you previously obtained in <a href="connection-prereqs.html#connection-prereqs-fingerprint">(Optional) Get the Instance Fingerprint</a>. If these fingerprints
+                              						don't match, someone might be attempting a "man-in-the-middle" attack. If
+                              						they match, continue to the next step.
+                           </p>
+                           				
+                        </li>
+                        <li>
+                           					
+                           <p>Enter <strong class="userinput"><code>yes</code></strong>.
+                           </p>
+                           					
+                           <p>You see a response like the following:</p>
+                           					<pre class="screen">Warning: Permanently added 'ec2-198-51-100-1.compute-1.amazonaws.com' (RSA) 
+to the list of known hosts.
+Sending file modes: C0644 20 SampleFile.txt
+Sink: C0644 20 SampleFile.txt
+SampleFile.txt                                100%   20     0.0KB/s   00:00</pre>
+                           					<p>If you receive a "bash: scp: command not found" error, you must first install
+                              							<b>scp</b> on your Linux instance. For some operating
+                              						systems, this is located in the <code>openssh-clients</code>
+                              						package. For Amazon Linux variants, such as the Amazon ECS-optimized AMI, use
+                              the
+                              						following command to install <b>scp</b>:
+                           </p>
+                           					<pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight"><code class="prompt" copy="false">[ec2-user ~]$ </code><strong class="userinput"><code>sudo yum install -y openssh-clients</code></strong></code></pre>
+                           				</li>
+                        <li>
+                           					
+                           <p>To transfer files in the other direction (from your Amazon EC2 instance to your local
+                              						computer), reverse the order of the host parameters. For example, to
+                              						transfer the <code>SampleFile.txt</code> file from your EC2 instance
+                              						back to the home directory on your local computer as
+                              							<code>SampleFile2.txt</code>, use the following command on your
+                              						local computer:
+                           </p>
+                           					<pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight">scp -i <em class="replaceable"><code>/path/my-key-pair</code></em>.pem <em class="replaceable"><code>ec2-user</code></em>@<em class="replaceable"><code>ec2-198-51-100-1.compute-1.amazonaws.com</code></em>:<em class="replaceable"><code>~/SampleFile.txt ~/SampleFile2.txt</code></em></code></pre>
+                           				</li>
+                        <li>
+                           					
+                           <p>(IPv6 only) Alternatively, you can transfer files in the other direction using the
+                              						instance's IPv6 address:
+                           </p>
+                           					<pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight">scp -i <em class="replaceable"><code>/path/my-key-pair</code></em>.pem <em class="replaceable"><code>ec2-user</code></em>@\[<em class="replaceable"><code>2001:db8:1234:1a00:9691:9503:25ad:1761</code></em>\]:<em class="replaceable"><code>~/SampleFile.txt ~/SampleFile2.txt</code></em></code></pre>
+                           				</li>
+                     </ol>
+                     
+                     		
+                     <div id="marketing-target"><span class="close-button"></span><div class="marketing-title" id="marketing-title"></div>
+                        <div class="marketing-description"><span id="marketing-description"></span><span id="marketing-cta"></span></div>
+                     </div>
+                  </div>
+                  <noscript>
+                     <div>
+                        <div>
+                           <div>
+                              <div id="js_error_message">
+                                 <p><img src="https://d1ge0kk1l5kms0.cloudfront.net/images/G/01/webservices/console/warning.png" alt="Warning" /> <strong>Javascript is disabled or is unavailable in your
+                                       browser.</strong></p>
+                                 <p>To use the AWS Documentation, Javascript must be
+                                    enabled. Please refer to your browser's Help pages for instructions.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </noscript>
+                  <div id="main-col-footer">
+                     <div id="doc-conventions"><a target="_top" href="/general/latest/gr/docconventions.html">Document Conventions</a></div>
+                     <div id="next"><a class="awstoc" accesskey="p" href="connection-prereqs.html">« Previous </a><a class="awstoc" accesskey="n" href="Connect-using-EC2-Instance-Connect.html">Next »</a></div>
+                     <div id="copyright-main-footer">© 2019, Amazon Web Services, Inc. or its affiliates. All rights
+                        reserved.
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div id="right-expanded">
+               <div id="right-content-wrapper">
+                  <div id="pagetoc">
+                     <p>On this page:</p>
+                     <ul class="pagetoc">
+                        <li class="pagetoc" name="Prerequisites"><a class="pagetoc" href="#ssh-prereqs">Prerequisites</a></li>
+                        <li class="pagetoc" name="Connect to Your Linux Instance using an SSH&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;Client"><a class="pagetoc" href="#AccessingInstancesLinuxSSHClient">Connect to Your Linux Instance using an SSH
+                              					Client</a></li>
+                        <li class="pagetoc" name="Transferring Files to Linux Instances from Linux Using&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;SCP"><a class="pagetoc" href="#AccessingInstancesLinuxSCP">Transferring Files to Linux Instances from Linux Using
+                              					SCP</a></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="cookie-notice">
+         <div class="cookie-notice-text">We use cookies to provide and improve our services. By using
+            our site, you consent to cookies. <a href="http://aws.amazon.com/legal/cookies">Learn more</a></div>
+      </div>
+      <div id="footer">
+         <div id="footer_short_fb" class="hide" title="Feedback"><a target="_blank" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=EC2&amp;topic_url=http://docs.aws.amazon.com/en_us/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html&amp;hidden_guide_name=User Guide for Linux Instances&amp;hidden_api_version=&amp;hidden_file_name=AccessingInstancesLinux"><i class="awsdocs-footer-text fa fa-envelope-o"></i></a></div>
+         <div id="footer_toggle" class="mediaobject">
+            <div id="footer_toggle_img" class="awsdocs-footer-text fa fa-caret-down"></div>
+            <div id="footer_toggle_img_collapse" class="hide awsdocs-footer-text fa fa-caret-right"></div>
+         </div>
+         <div id="footer-left"><a class="awsdocs-footer-text" target="_top" href="http://aws.amazon.com/terms">Terms of Use</a><span class="awsdocs-footer-text"> | </span><a class="awsdocs-footer-text" target="_top" href="http://aws.amazon.com/privacy">Privacy</a><span class="awsdocs-footer-text"> | </span><span class="awsdocs-footer-text">© 2019, Amazon Web Services, Inc. or its affiliates. All rights
+               reserved.</span></div>
+         <div id="footer-right">
+            <div id="feedback">
+               <div id="forums"><a id="forum_link" target="_blank" href="http://forums.aws.amazon.com/forum.jspa?forumID=30" class="awsdocs-footer-text">Have a question? Try the Forums.</a></div>
+               <div id="feedback-message" class="awsdocs-footer-text">Did this page help you?</div>
+               <div id="feedback-yesno-buttons"><a class="awstoc btn btn-default" target="_blank" href="feedbackyes.html?topic_url=http://docs.aws.amazon.com/en_us/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">Yes</a><a class="awstoc btn btn-default" target="_blank" href="feedbackno.html?topic_url=http://docs.aws.amazon.com/en_us/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html">No</a></div>
+               <div id="feedback-feedback-button"><a class="awstoc btn btn-default" target="_blank" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=EC2&amp;topic_url=http://docs.aws.amazon.com/en_us/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html&amp;hidden_guide_name=User Guide for Linux Instances&amp;hidden_api_version=&amp;hidden_file_name=AccessingInstancesLinux">Feedback</a></div>
+            </div>
+         </div>
+      </div>
+      <!-- SiteCatalyst code version: H.25.2.
+            Copyright 1996-2012 Adobe, Inc. All Rights Reserved
+            More info available at http://www.omniture.com --><script language="JavaScript" type="text/javascript" src="https://a0.awsstatic.com/s_code/js/1.0/awshome_s_code.js"></script><script language="JavaScript" type="text/javascript">
+         <!--
+
+            // Documentation Service Name
+            s.prop66='Amazon Elastic Compute Cloud';
+            s.eVar66='D=c66';
+  
+            // Documentation Guide Name                                                                 
+            s.prop65='User Guide for Linux Instances';
+            s.eVar65='D=c65';
+
+            var s_code=s.t();if(s_code)document.write(s_code)//--></script><script language="JavaScript" type="text/javascript">
+         <!--
+                if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+                //--></script><noscript><img src="https://amazonwebservices.d2.sc.omtrdc.net/b/ss/awsamazondev/1/H.25.2--NS/0" height="1" width="1" border="0" alt="" /></noscript>
+      <!--/DO NOT REMOVE/-->
+      <!-- End SiteCatalyst code version: H.25.2. -->
+   </body>
+</html>

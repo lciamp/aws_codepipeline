@@ -1,0 +1,557 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Configuring the AWS CLI - AWS Command Line Interface</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="home" href="#top" />
+      <link rel="up" href="cli-chap-welcome.html" title="What Is the AWS Command Line Interface?" />
+      <link rel="prev" href="install-bundle.html" title="Install the AWS CLI Using the Bundled Installer&#xA;      (Linux, macOS, or Unix)" />
+      <link rel="next" href="cli-configure-files.html" title="Configuration and Credential Files" />
+      <meta name="description" content="Configure the AWS Command Line Interface (AWS CLI) and specify the settings for interacting with AWS." />
+      <meta name="deployment_region" content="IAD" />
+      <meta name="product" content="AWS Command Line Interface" />
+      <meta name="guide" content="User Guide" />
+      <meta name="guide-locale" content="en_us" />
+      <meta name="tocs" content="toc-contents.json" />
+      <meta name="marketingLocale" content="en_US" />
+      <link rel="icon" type="image/ico" href="/images/favicon.ico" />
+      <link rel="shortcut icon" type="image/ico" href="/images/favicon.ico" />
+      <link rel="canonical" href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html" />
+      <link rel="stylesheet" type="text/css" href="/css/jquery-ui.min.css" />
+      <link rel="stylesheet" type="text/css" href="/font/css/font-awesome.min.css" />
+      <link rel="stylesheet" type="text/css" href="/css/google-font.css" />
+      <link id="code-style" rel="stylesheet" type="text/css" href="/css/code/light.css" />
+      <link rel="stylesheet" type="text/css" href="/css/jquery-ui.theme.css" />
+      <link rel="stylesheet" type="text/css" href="/css/colorbox.css" />
+      <link rel="stylesheet" type="text/css" href="/css/awsdocs.css?v=20181221" /><script type="text/javascript" src="/js/highlight.pack.js"></script><script type="text/javascript" src="/js/jquery.min.js"></script><script type="text/javascript" src="/js/jquery-ui.min.js"></script><script type="text/javascript" src="/js/jquery.colorbox.js"></script><script type="text/javascript" src="/js/awsdocs.min.js?v=20181221"></script><link rel="stylesheet" type="text/css" href="/assets/marketing/css/marketing-target.css" /><script type="text/javascript" src="/assets/marketing/js/marketing-target.js"></script></head>
+   <body id="top">
+      <div xmlns:db="http://docbook.org/ns/docbook" id="aws-nav" class="aws-nav-header">
+         <div class="aws-nav-header-left">
+            <div class="aws-nav-logo">
+               <!--aws_logo_105x39.png--><a href="http://aws.amazon.com"><img src="/images/aws_logo_105x39.png" alt="Amazon Web Services" /></a></div>
+         </div>
+         <div id="aws-nav-header-right" class="aws-nav-header-right">
+            <div class="aws-nav-cta-button-outer">
+               <div class="js-mbox" data-mbox="en_h_nav_cta"><span class="aws-nav-cta-default" id="span-conosole-signin"><a id="aws-nav-cta-button" class="aws-nav-button" href="https://console.aws.amazon.com/console/home">Sign In to the Console</a></span><span class="aws-nav-cta-default" id="span-conosole-signup" style="display:none"><a id="aws-nav-cta-button" class="aws-nav-button" href="https://portal.aws.amazon.com/gp/aws/developer/registration/index.html">Try AWS for Free</a></span></div>
+            </div>
+            <div class="aws-nav-popover-trigger" data-dropdown="aws-nav-dropdown-lang"><select id="languageSelection" onchange="SelectLanguage()">
+                  <option value="/de_de/cli/latest/userguide/cli-chap-configure.html">Deutsch</option>
+                  <option value="/en_us/cli/latest/userguide/cli-chap-configure.html" selected="selected">English</option>
+                  <option value="/es_es/cli/latest/userguide/cli-chap-configure.html">Español</option>
+                  <option value="/fr_fr/cli/latest/userguide/cli-chap-configure.html">Français</option>
+                  <option value="/it_it/cli/latest/userguide/cli-chap-configure.html">Italiano</option>
+                  <option value="/ja_jp/cli/latest/userguide/cli-chap-configure.html">日本語</option>
+                  <option value="/ko_kr/cli/latest/userguide/cli-chap-configure.html">한국어</option>
+                  <option value="/pt_br/cli/latest/userguide/cli-chap-configure.html">Português</option>
+                  <option value="/zh_cn/cli/latest/userguide/cli-chap-configure.html">中文 (简体)</option>
+                  <option value="/zh_tw/cli/latest/userguide/cli-chap-configure.html">中文 (繁體)</option></select></div><a class="btn btn-rss-link" id="rss-link-top" target="_blank" href="aws-cli-user-guide-updates.rss" title="View RSS Feed"></a><a class="btn btn-kindle-link" id="kindle-link-top" target="_blank" href="http://www.amazon.com/dp/B07641F5CR" title="Open Kindle"></a><a class="btn btn-pdf-link" id="pdf-link-top" href="aws-cli.pdf#cli-chap-configure" target="_blank" title="Open PDF"></a><a class="btn btn-github-link" id="github-link-top" href="https://github.com/awsdocs/aws-cli-user-guide/tree/master/doc_source/cli-chap-configure.md" target="_blank" title="Edit on GitHub"></a><div id="aws-nav-quicklinks-separator" class="aws-nav-quicklinks-separator">
+               <div class="aws-nav-left"></div>
+               <div class="aws-nav-right"></div>
+            </div>
+         </div>
+      </div>
+      <div id="content-container">
+         <div id="left-column">
+            <div id="left-col-header">
+               <div id="left-col-top-content">
+                  <div id="service-name">AWS Command Line Interface </div>
+                  <div id="search"><i id="search-icon" class="fa fa-search fa-2x"></i></div>
+                  <div id="guide-info">User Guide
+                     <div id="content-button"><i id="toggle-contents" class="fa fa-bars"></i></div>
+                  </div>
+               </div>
+               <form id="finegrainedSearch" method="get" onsubmit="return searchFormSubmit(this);" action="/search/doc-search.html">
+                  <div id="search-form"><select id="search-select" name="searchPath">
+                        <option value="all">Entire Site</option>
+                        <option value="AWSMarketplace">AMIs from AWS Marketplace</option>
+                        <option value="amis">AMIs from All Sources</option>
+                        <option value="articles">Articles &amp; Tutorials</option>
+                        <option value="products_and_info">AWS Product Information</option>
+                        <option value="case_studies">Case Studies</option>
+                        <option value="customerapps">Customer Apps</option>
+                        <option value="documentation">Documentation</option>
+                        <option value="documentation-product">Documentation - This Product</option>
+                        <option value="documentation-guide" selected="selected">Documentation - This Guide</option>
+                        <option value="datasets">Public Data Sets</option>
+                        <option value="releasenotes">Release Notes</option>
+                        <option value="solution_providers">Partners</option>
+                        <option value="code">Sample Code &amp; Libraries</option></select><br /><input id="search-query" name="searchQuery" type="text" placeholder="Search" /><input id="search-button" src="/images/search-button.png" alt="Go" type="image" /></div><input type="hidden" name="this_doc_product" id="this_doc_product" value="AWS Command Line Interface" /><input type="hidden" name="this_doc_guide" id="this_doc_guide" value="User Guide" /><input type="hidden" name="doc_locale" value="en_us" /></form>
+            </div>
+            <div id="toc"></div>
+         </div>
+         <div id="main-column">
+            <div id="main">
+               <div id="main-content">
+                  <div id="main-col-body">
+                     <table summary="Breadcrumbs">
+                        <tr>
+                           <td>
+                              <div class="breadcrumb"><a href="/index.html">AWS Documentation</a> » <a href="/cli/index.html">AWS Command Line Interface</a> » <a href="index.html">User Guide</a> » <span class="breadcrumb">Configuring the AWS CLI</span></div>
+                           </td>
+                        </tr>
+                     </table>
+                     <div id="language-notice">
+                        <div class="language-notice-text"></div>
+                     </div>
+                     <div></div>
+                     <h1 class="topictitle" id="cli-chap-configure">Configuring the AWS CLI</h1>
+                     <p>This section explains how to configure the settings that the AWS Command Line Interface
+                        (AWS CLI) uses to
+                        interact with AWS, including your security credentials, the default output format,
+                        and the
+                        default AWS Region.
+                     </p>
+                     <div class="aws-note">
+                        <p class="aws-note">Note</p>
+                        <p>AWS requires that all incoming requests are cryptographically signed. The AWS CLI
+                           does
+                           this for you. The "signature" includes a date/time stamp. Therefore, you must ensure
+                           that your
+                           computer's date and time are set correctly. If you don't, and the date/time in the
+                           signature
+                           is too far off of the date/time recognized by the AWS service, then AWS rejects the
+                           request.
+                        </p>
+                     </div>
+                     <div class="highlights">
+                        <p><strong>Sections</strong></p>
+                        <ul>
+                           <li><a href="#cli-quick-configuration">Quickly Configuring the AWS CLI</a></li>
+                           <li><a href="#config-settings-and-precedence">Configuration Settings and Precedence</a></li>
+                           <li><a href="cli-configure-files.html">Configuration and Credential Files</a></li>
+                           <li><a href="cli-configure-profiles.html">Named Profiles</a></li>
+                           <li><a href="cli-configure-envvars.html">Environment Variables</a></li>
+                           <li><a href="cli-configure-options.html">Command Line Options</a></li>
+                           <li><a href="cli-configure-sourcing-external.html">Sourcing Credentials with an External
+                                 Process</a></li>
+                           <li><a href="cli-configure-metadata.html">Instance Metadata</a></li>
+                           <li><a href="cli-configure-proxy.html">Using an HTTP Proxy</a></li>
+                           <li><a href="cli-configure-role.html">Assuming an IAM Role in the AWS CLI</a></li>
+                           <li><a href="cli-configure-completion.html">Command Completion</a></li>
+                        </ul>
+                     </div>
+                     
+                     <h2 id="cli-quick-configuration">Quickly Configuring the AWS CLI</h2>
+                     
+                     <p> For general use, the <code class="code">aws configure</code> command is the fastest way to set up your
+                        AWS CLI installation. 
+                     </p>
+                     <pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight"><code class="prompt" copy="false">$ </code><strong class="userinput"><code>aws configure</code></strong>
+<code class="computeroutput" copy="false">AWS Access Key ID [None]: <strong class="userinput"><code><em class="replaceable"><code>AKIAIOSFODNN7EXAMPLE</code></em></code></strong>
+AWS Secret Access Key [None]: <strong class="userinput"><code><em class="replaceable"><code>wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</code></em></code></strong>
+Default region name [None]: <strong class="userinput"><code><em class="replaceable"><code>us-west-2</code></em></code></strong>
+Default output format [None]: <strong class="userinput"><code><em class="replaceable"><code>json</code></em></code></strong></code></code></pre>
+                     <p>When you type this command, the AWS CLI prompts you for four pieces of information
+                        (access
+                        key, secret access key, AWS Region, and output format), and stores them in a <em>profile</em> (a collection of settings) named <code class="code">default</code>. This
+                        profile is then used any time you run an AWS CLI command that doesn't explicitly specify
+                        a
+                        profile to use.
+                     </p>
+                     
+                     
+                     <h3 id="cli-quick-configuration-creds">Access Key and Secret Access Key</h3>
+                     
+                     <p>The <code class="code">AWS Access Key ID</code> and <code class="code">AWS Secret Access Key</code> are your AWS
+                        credentials. They are associated with an AWS Identity and Access Management (IAM)
+                        user or role that determines what
+                        permissions you have. For a tutorial on how to create a user with the IAM service,
+                        see
+                        <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html">Creating Your First
+                           IAM Admin User and Group</a> in the <em>IAM User Guide</em>.
+                     </p>
+                     
+                     
+                     
+                     <p>Access keys consist of an access key ID and secret access key, which 
+                        are used to sign programmatic requests that you make to AWS. If you don't 
+                        have access keys, you can create them from the AWS Management Console.
+                        As a best practice, do not use the AWS account root user access keys for any task
+                        where it's not required. Instead,
+                        <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html">create a new administrator IAM user</a> 
+                        with access keys for yourself.
+                     </p>
+                     
+                     <p>The only time that you can view or download the secret access key is when you create
+                        
+                        the keys. You cannot recover them later. However, you can create new access keys at
+                        any time. 
+                        You must also have permissions to perform the required IAM actions. For more information,
+                        see 
+                        <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/access_permissions-required.html">Permissions Required to Access IAM 
+                           Resources</a> in the <em>IAM User Guide</em>.
+                     </p>
+                     
+                     <p class="title"><b>To create access keys for an IAM user</b></p>
+                     <ol>
+                        <li>
+                           <p>Sign in to the AWS Management Console and open the IAM console at <a href="https://console.aws.amazon.com/iam/" target="_blank">https://console.aws.amazon.com/iam/</a>.
+                           </p>
+                        </li>
+                        <li>
+                           
+                           <p>In the navigation pane, choose <b>Users</b>.
+                           </p>
+                           
+                        </li>
+                        <li>
+                           
+                           <p>Choose the name of the user whose access keys you want to create, and then choose
+                              the <b>Security credentials</b> tab.
+                           </p>
+                           
+                        </li>
+                        <li>
+                           
+                           <p>In the <b>Access keys</b> section, choose <b>Create access key</b>.
+                           </p>
+                           
+                        </li>
+                        <li>
+                           
+                           <p>To view the new access key pair, choose <b>Show</b>. You will not have access to the
+                              secret access key again after this dialog box closes. Your credentials will look something
+                              like this:
+                           </p>
+                           
+                           <div class="itemizedlist">
+                              
+                              
+                              
+                              <ul class="itemizedlist" type="disc">
+                                 <li class="listitem">
+                                    
+                                    <p>Access key ID: AKIAIOSFODNN7EXAMPLE</p>
+                                    
+                                 </li>
+                                 <li class="listitem">
+                                    
+                                    <p>Secret access key: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY</p>
+                                    
+                                 </li>
+                              </ul>
+                           </div>
+                           
+                        </li>
+                        <li>
+                           
+                           <p>To download the key pair, choose <b>Download .csv file</b>. Store the keys 
+                              in a secure location. You will not have access to the
+                              secret access key again after this dialog box closes.
+                           </p>
+                           
+                           <p>Keep the keys confidential in order to protect your AWS account and never email 
+                              them. Do not share them outside your organization, even if an inquiry 
+                              appears to come from AWS or Amazon.com. No one who legitimately 
+                              represents Amazon will ever ask you for your secret key.
+                           </p>
+                           
+                        </li>
+                        <li>
+                           
+                           <p>After you download the <code>.csv</code> file, choose <b>Close</b>. When you
+                              create an access key, the key pair is active by default, and you can use the pair
+                              right away.
+                           </p>
+                           
+                        </li>
+                     </ol>
+                     
+                     <p><span class="topcom">Related topics</span></p>
+                     
+                     <div class="itemizedlist">
+                        
+                        
+                        
+                        <ul class="itemizedlist" type="disc">
+                           <li class="listitem">
+                              
+                              <p><a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/introduction.html">What Is IAM?</a> 
+                                 in the <em>IAM User Guide</em></p>
+                              
+                           </li>
+                           <li class="listitem">
+                              
+                              <p><a href="https://docs.aws.amazon.com/general/latest/gr/aws-security-credentials.html">AWS Security Credentials</a> 
+                                 in <em>AWS General Reference</em>
+                                 
+                              </p>
+                              
+                           </li>
+                        </ul>
+                     </div>
+                     
+                     
+                     
+                     
+                     <h3 id="cli-quick-configuration-region">Region</h3>
+                     
+                     <p>The <code class="code">Default region name</code> identifies the AWS Region whose servers you want to
+                        send your requests to by default. This is typically the Region closest to you, but
+                        it can be
+                        any Region. For example, you can type <code class="code">us-west-2</code> to use US West (Oregon). This
+                        is the Region that all later requests are sent to, unless you specify otherwise in
+                        an
+                        individual command.
+                     </p>
+                     
+                     <div class="aws-note">
+                        <p class="aws-note">Note</p>
+                        <p>You must specify an AWS Region when using the AWS CLI, either explicitly or by setting
+                           a
+                           default Region. For a list of the available Regions, see <a href="https://docs.aws.amazon.com/general/latest/gr/rande.html">Regions and Endpoints</a>. The Region designators used
+                           by the AWS CLI are the same names that you see in AWS Management Console URLs and
+                           service
+                           endpoints.
+                        </p>
+                     </div>
+                     
+                     
+                     
+                     <h3 id="cli-quick-configuration-format">Output Format</h3>
+                     
+                     <p>The <code class="code">Default output format</code> specifies how the results are formatted. The
+                        value can be any of the values in the following list. If you don't specify an output
+                        format,
+                        <code class="code">json</code> is used as the default.
+                     </p>
+                     
+                     <div class="itemizedlist">
+                        
+                        
+                        
+                        
+                        <ul class="itemizedlist" type="disc">
+                           <li class="listitem">
+                              
+                              <p><b><code class="code">json</code></b>: The output is formatted as a <a href="https://json.org/" target="_blank">JSON</a> string.
+                              </p>
+                              
+                           </li>
+                           <li class="listitem">
+                              
+                              <p><b><code class="code">text</code></b>: The output is formatted as multiple lines of
+                                 tab-separated string values, which can be useful if you want to pass the output to
+                                 a text
+                                 processor, like <code class="code">grep</code>, <code class="code">sed</code>, or <code class="code">awk</code>.
+                              </p>
+                              
+                           </li>
+                           <li class="listitem">
+                              
+                              <p><b><code class="code">table</code></b>: The output is formatted as a table using the
+                                 characters +|- to form the cell borders. It typically presents the information in
+                                 a
+                                 "human-friendly" format that is much easier to read than the others, but not as
+                                 programmatically useful.
+                              </p>
+                              
+                           </li>
+                        </ul>
+                     </div>
+                     
+                     
+                     
+                     
+                     <h3 id="cli-quick-configuration-multi-profiles">Quick Configuration and Multiple
+                        Profiles
+                     </h3>
+                     
+                     <p>If you use the command shown previously, the result is a single profile named
+                        <code class="code">default</code>. You can also create additional configurations by specifying the name
+                        of a profile using the <code class="code">--profile</code> option.
+                     </p>
+                     <pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight"><code class="prompt" copy="false">$ </code><strong class="userinput"><code>aws configure --profile user2</code></strong>
+<code class="computeroutput" copy="false">AWS Access Key ID [None]: </code><strong class="userinput"><code><em class="replaceable"><code>AKIAI44QH8DHBEXAMPLE</code></em></code></strong>
+<code class="computeroutput" copy="false">AWS Secret Access Key [None]: </code><strong class="userinput"><code><em class="replaceable"><code>je7MtGbClwBF/2Zp9Utk/h3yCo8nvbEXAMPLEKEY</code></em></code></strong>
+<code class="computeroutput" copy="false">Default region name [None]: </code><strong class="userinput"><code><em class="replaceable"><code>us-east-1</code></em></code></strong>
+<code class="computeroutput" copy="false">Default output format [None]: </code><strong class="userinput"><code><em class="replaceable"><code>text</code></em></code></strong></code></pre>
+                     <p>Then, when you run a command, you can omit the <code class="code">--profile</code> option and use the
+                        settings stored in the <code class="code">default</code> profile.
+                     </p>
+                     <pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight"><code class="prompt" copy="false">$ </code><strong class="userinput"><code>aws s3 ls</code></strong></code></pre>
+                     <p>Or you can specify a <code class="code">--profile <em class="replaceable"><code>profilename</code></em></code> and
+                        use the settings stored under that name.
+                     </p>
+                     <pre class="programlisting"><div class="code-btn-container"><div class="btn-copy-code" title="Copy"></div><div class="btn-dark-theme" title="Dark theme" title-dark="Dark theme" title-light="Light theme"></div></div><code class="nohighlight"><code class="prompt" copy="false">$ </code><strong class="userinput"><code>aws s3 ls --profile <em class="replaceable"><code>myuser</code></em></code></strong></code></pre>
+                     <p>To update any of your settings, simply run <code class="code">aws configure</code> again (with or
+                        without the <code class="code">--profile</code> parameter, depending on which profile you want to update)
+                        and enter new values as appropriate. The next sections contain more information about
+                        the
+                        files that <code class="code">aws configure</code> creates, additional settings, and named
+                        profiles.
+                     </p>
+                     
+                     
+                     
+                     <h2 id="config-settings-and-precedence">Configuration Settings and Precedence</h2>
+                     
+                     <p>The AWS CLI uses a set of <em>credential providers</em> to look
+                        for AWS credentials. Each credential provider looks for credentials in a different
+                        place, such
+                        as the system or user environment variables, local AWS configuration files, or explicitly
+                        declared on the command line as a parameter. The AWS CLI looks for credentials and
+                        configuration
+                        settings by invoking the providers in the following order, stopping when it finds
+                        a set of
+                        credentials to use:
+                     </p>
+                     
+                     <div class="orderedlist">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        <ol>
+                           <li>
+                              
+                              <p><b><a href="cli-configure-options.html">Command line
+                                       options</a></b> – You can specify <code class="code">--region</code>,
+                                 <code class="code">--output</code>, and <code class="code">--profile</code> as parameters on the command
+                                 line.
+                              </p>
+                              
+                           </li>
+                           <li>
+                              
+                              <p><b><a href="cli-configure-envvars.html">Environment
+                                       variables</a></b> – You can store values in the environment variables:
+                                 <code class="code">AWS_ACCESS_KEY_ID</code>, <code class="code">AWS_SECRET_ACCESS_KEY</code>, and
+                                 <code class="code">AWS_SESSION_TOKEN</code>. If they are present, they are used.
+                              </p>
+                              
+                           </li>
+                           <li>
+                              
+                              <p><b><a href="cli-configure-files.html">The CLI credentials
+                                       file</a></b> – This is one of the files that is updated when you run
+                                 the command <code class="code">aws configure</code>. The file is located at <code>~/.aws/credentials</code>
+                                 on Linux, macOS, or Unix, or at <code>C:\Users\<em class="replaceable"><code>USERNAME</code></em>\.aws\credentials</code> on Windows. This file can contain the
+                                 credential details for the <code class="code">default</code> profile and any named profiles.
+                              </p>
+                              
+                           </li>
+                           <li>
+                              
+                              <p><b><a href="cli-configure-files.html">The CLI configuration
+                                       file</a></b> – This is another file that is updated when you run the
+                                 command <code class="code">aws configure</code>. The file is located at <code>~/.aws/config</code>
+                                 on Linux, macOS, or Unix, or at <code>C:\Users\<em class="replaceable"><code>USERNAME</code></em>\.aws\config</code> on Windows. This file contains the
+                                 configuration settings for the default profile and any named profiles. 
+                              </p>
+                              
+                           </li>
+                           <li>
+                              
+                              <p><b><a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html">Container
+                                       credentials</a></b> – You can associate an IAM role with each of
+                                 your Amazon Elastic Container Service (Amazon ECS) task definitions. Temporary credentials
+                                 for that role are then
+                                 available to that task's containers. For more information see <a href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-iam-roles.html">IAM Roles for Tasks</a> in the <em>Amazon Elastic Container Service Developer Guide</em>.
+                              </p>
+                              
+                           </li>
+                           <li>
+                              
+                              <p><b><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html">Instance profile credentials</a></b> – You can associate an IAM
+                                 role with each of your Amazon Elastic Compute Cloud (Amazon EC2) instances. Temporary
+                                 credentials for that role
+                                 are then available to code running in the instance. The credentials are delivered
+                                 through
+                                 the Amazon EC2 metadata service. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html">IAM Roles for Amazon EC2</a> in the
+                                 <em>Amazon EC2 User Guide for Linux Instances</em> and <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html">Using Instance
+                                    Profiles</a> in the <em>IAM User Guide</em>.
+                              </p>
+                              
+                           </li>
+                        </ol>
+                     </div>
+                     
+                     <div id="marketing-target"><span class="close-button"></span><div class="marketing-title" id="marketing-title"></div>
+                        <div class="marketing-description"><span id="marketing-description"></span><span id="marketing-cta"></span></div>
+                     </div>
+                  </div>
+                  <noscript>
+                     <div>
+                        <div>
+                           <div>
+                              <div id="js_error_message">
+                                 <p><img src="https://d1ge0kk1l5kms0.cloudfront.net/images/G/01/webservices/console/warning.png" alt="Warning" /> <strong>Javascript is disabled or is unavailable in your
+                                       browser.</strong></p>
+                                 <p>To use the AWS Documentation, Javascript must be
+                                    enabled. Please refer to your browser's Help pages for instructions.
+                                 </p>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </noscript>
+                  <div id="main-col-footer">
+                     <div id="doc-conventions"><a target="_top" href="/general/latest/gr/docconventions.html">Document Conventions</a></div>
+                     <div id="next"><a class="awstoc" accesskey="p" href="install-bundle.html">« Previous </a><a class="awstoc" accesskey="n" href="cli-configure-files.html">Next »</a></div>
+                     <div id="copyright-main-footer">© 2019, Amazon Web Services, Inc. or its affiliates. All rights
+                        reserved.
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div id="right-expanded">
+               <div id="right-content-wrapper">
+                  <div id="pagetoc">
+                     <p>On this page:</p>
+                     <ul class="pagetoc">
+                        <li class="pagetoc" name="Quickly Configuring the AWS CLI"><a class="pagetoc" href="#cli-quick-configuration">Quickly Configuring the AWS CLI</a></li>
+                        <li class="pagetoc" name="Configuration Settings and Precedence"><a class="pagetoc" href="#config-settings-and-precedence">Configuration Settings and Precedence</a></li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div id="cookie-notice">
+         <div class="cookie-notice-text">We use cookies to provide and improve our services. By using
+            our site, you consent to cookies. <a href="http://aws.amazon.com/legal/cookies">Learn more</a></div>
+      </div>
+      <div id="footer">
+         <div id="footer_short_fb" class="hide" title="Feedback"><a target="_blank" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS Command Line Interface&amp;topic_url=http://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-configure.html&amp;hidden_guide_name=User Guide&amp;hidden_api_version=&amp;hidden_file_name=cli-chap-configure"><i class="awsdocs-footer-text fa fa-envelope-o"></i></a></div>
+         <div id="footer_toggle" class="mediaobject">
+            <div id="footer_toggle_img" class="awsdocs-footer-text fa fa-caret-down"></div>
+            <div id="footer_toggle_img_collapse" class="hide awsdocs-footer-text fa fa-caret-right"></div>
+         </div>
+         <div id="footer-left"><a class="awsdocs-footer-text" target="_top" href="http://aws.amazon.com/terms">Terms of Use</a><span class="awsdocs-footer-text"> | </span><a class="awsdocs-footer-text" target="_top" href="http://aws.amazon.com/privacy">Privacy</a><span class="awsdocs-footer-text"> | </span><span class="awsdocs-footer-text">© 2019, Amazon Web Services, Inc. or its affiliates. All rights
+               reserved.</span></div>
+         <div id="footer-right">
+            <div id="feedback">
+               <div id="forums"><a id="forum_link" target="_blank" href="http://forums.aws.amazon.com/forum.jspa?forumID=150" class="awsdocs-footer-text">Have a question? Try the Forums.</a></div>
+               <div id="feedback-message" class="awsdocs-footer-text">Did this page help you?</div>
+               <div id="feedback-yesno-buttons"><a class="awstoc btn btn-default" target="_blank" href="feedbackyes.html?topic_url=http://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-configure.html">Yes</a><a class="awstoc btn btn-default" target="_blank" href="feedbackno.html?topic_url=http://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-configure.html">No</a></div>
+               <div id="feedback-feedback-button"><a class="awstoc btn btn-default" target="_blank" href="https://docs.aws.amazon.com/forms/aws-doc-feedback?hidden_service_name=AWS Command Line Interface&amp;topic_url=http://docs.aws.amazon.com/en_us/cli/latest/userguide/cli-chap-configure.html&amp;hidden_guide_name=User Guide&amp;hidden_api_version=&amp;hidden_file_name=cli-chap-configure">Feedback</a></div>
+            </div>
+         </div>
+      </div>
+      <!-- SiteCatalyst code version: H.25.2.
+            Copyright 1996-2012 Adobe, Inc. All Rights Reserved
+            More info available at http://www.omniture.com --><script language="JavaScript" type="text/javascript" src="https://a0.awsstatic.com/s_code/js/1.0/awshome_s_code.js"></script><script language="JavaScript" type="text/javascript">
+         <!--
+
+            // Documentation Service Name
+            s.prop66='AWS Command Line Interface';
+            s.eVar66='D=c66';
+  
+            // Documentation Guide Name                                                                 
+            s.prop65='User Guide';
+            s.eVar65='D=c65';
+
+            var s_code=s.t();if(s_code)document.write(s_code)//--></script><script language="JavaScript" type="text/javascript">
+         <!--
+                if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+                //--></script><noscript><img src="https://amazonwebservices.d2.sc.omtrdc.net/b/ss/awsamazondev/1/H.25.2--NS/0" height="1" width="1" border="0" alt="" /></noscript>
+      <!--/DO NOT REMOVE/-->
+      <!-- End SiteCatalyst code version: H.25.2. -->
+   </body>
+</html>
